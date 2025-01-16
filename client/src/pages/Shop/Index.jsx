@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Productlist from "./ProductList";
+import Banner from "./Banner";
 
 const Index = () => {
   return (
-    <div>Shop index</div>
-  )
-}
+    <div>
+      <Banner />
+      <Productlist />
+    </div>
+  );
+};
 
-export default Index
+export default Index;
