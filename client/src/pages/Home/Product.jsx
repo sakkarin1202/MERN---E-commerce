@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ProductList from "./product.json";
+import ProductService from "../../services/product.service";
 import Card from "../../components/Card";
 
 const SampleNextArrow = (props) => {
@@ -17,7 +17,16 @@ const SampleNextArrow = (props) => {
   );
 };
 const Product = () => {
-  const [products, setProducts] = useState(ProductList);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await ProductService.getAllProducts();
+      const data = response.data;
+      const special = data.filter((item) => item.category === "clothing");
+      setProducts(special);
+    };
+    fetchData();
+  }, []);
   const slider = useRef(null);
   const setting = {
     dots: true,
