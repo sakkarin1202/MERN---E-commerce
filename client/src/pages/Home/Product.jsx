@@ -22,7 +22,7 @@ const Product = () => {
     const fetchData = async () => {
       const response = await ProductService.getAllProducts();
       const data = response.data;
-      const special = data.filter((item) => item.category === "clothing");
+      const special = data.filter((item) => item.category === "swag");
       setProducts(special);
     };
     fetchData();
@@ -73,13 +73,13 @@ const Product = () => {
       </div>
       <div className="md:absolute right-3 top-8 mb-10 md:mr-24 space-x-2">
         <button
-          className="btn bg-red p-2 rounded-full h-15 w-20 mt-5 text-white"
+          className="btn btn-red p-2 rounded-full h-10 w-10 mt-5 text-white bg-red"
           onClick={() => slider?.current?.slickPrev()}
         >
           &lt;
         </button>
         <button
-          className="btn bg-red p-2 rounded-full h-15 w-20 mt-5 text-white"
+          className="btn btn-red p-2 rounded-full h-10 w-10 mt-5 text-white bg-red"
           onClick={() => slider?.current?.slickNext()}
         >
           &gt;
@@ -93,7 +93,7 @@ const Product = () => {
         >
           {products.length > 0 &&
             products.map((item, index) => {
-              return <Card item={item} key={index}></Card>;
+              return <Card item={item} key={index} />;
             })}
         </Slider>
       </div>
