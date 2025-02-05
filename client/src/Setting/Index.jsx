@@ -31,7 +31,7 @@ const UserProfile = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          navigate("/profile");
+          navigate("/UpdateProfile");
         })
         .catch((error) => {
           console.error("Error updating profile: ", error.message);

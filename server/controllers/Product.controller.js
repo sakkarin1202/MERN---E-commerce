@@ -68,6 +68,11 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.getProducts = async (req, res) => {
+  /**
+   *#swagger.tags = ['Product']
+    #swagger.summary = "get product"
+    #swagger.description = 'Endpoint to create a new product'
+   */
   try {
     const products = await ProductModel.find()
       .sort({ createdAt: -1 })
