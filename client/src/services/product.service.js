@@ -7,4 +7,5 @@ const getAllProducts = async () => {
 const ProductService = {
   getAllProducts,
 };
+
 export default ProductService;

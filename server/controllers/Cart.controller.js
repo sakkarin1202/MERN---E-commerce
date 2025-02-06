@@ -56,7 +56,7 @@ exports.getCartItemsByEmail = async (req, res) => {
   }
   try {
     const cartItems = await CartModel.find({ email });
-    if (!cartItems || cartItems.length === 0) {
+    if (!cartItems) {
       return res.status(404).json({ message: "No cart items found" });
     }
     return res.json(cartItems);
