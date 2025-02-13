@@ -3,7 +3,7 @@ import CartService from "../services/cart.service";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import useCart from "../hooks/useCart";
-import Swal from "sweetalert2";
+import swal from "SweetAlert2";
 
 const Card = ({ item }) => {
   const { _id, name, image, description, category, price } = item;
@@ -15,7 +15,7 @@ const Card = ({ item }) => {
   };
   const handleAddToCart = async () => {
     if (!user || !user.email) {
-      Swal.fire({
+      swal.fire({
         icon: "error ",
         title: "Oops...",
         text: "Please login to add to cart",
@@ -33,7 +33,7 @@ const Card = ({ item }) => {
       };
       const response = await CartService.createCartItem(cartItem);
       if (response.status === 200) {
-        Swal.fire({
+        swal.fire({
           icon: "success",
           title: "Success",
           text: "Item added to cart",
@@ -43,7 +43,7 @@ const Card = ({ item }) => {
         refetch();
       }
     } catch (error) {
-      Swal.fire({
+      swal.fire({
         icon: "error",
         title: "Oops...",
         text: error.message,

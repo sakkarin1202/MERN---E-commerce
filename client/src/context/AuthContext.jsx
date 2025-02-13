@@ -1,6 +1,4 @@
-//useState = เก็บข้อมูล useEffect = สร้างฟังชั่น
 import { createContext, useState, useEffect } from "react";
-export const AuthContext = createContext();
 import app from "../configs/firebase.config";
 import {
   createUserWithEmailAndPassword,
@@ -14,8 +12,12 @@ import {
   FacebookAuthProvider,
   updateProfile,
 } from "firebase/auth";
+// สร้าง Context
+export const AuthContext = createContext();
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const auth = getAuth(app);
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -26,7 +28,6 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     return signOut(auth);
   };
-
 
   const signUpWithGoogle = () => {
     const provider = new GoogleAuthProvider();
@@ -47,7 +48,6 @@ const AuthProvider = ({ children }) => {
     if (auth.currentUser) {
       try {
         await updateProfile(auth.currentUser, { displayName, photoURL });
-        // อัปเดตสถานะของผู้ใช้ใน state
         setUser({ ...auth.currentUser, displayName, photoURL });
       } catch (error) {
         console.error("เกิดข้อผิดพลาดขณะอัปเดตโปรไฟล์:", error);
@@ -67,6 +67,7 @@ const AuthProvider = ({ children }) => {
     signUpWithGithub,
     signUpWithFacebook,
     updateUserProfile,
+    isLoading,
   };
   //check if user is logged in
   useEffect(() => {
@@ -74,7 +75,9 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       if (currentUser) {
         setUser(currentUser);
+        setIsLoading(false);
       }
+      setIsLoading(false);
     });
     return () => {
       return unsubscribe();
