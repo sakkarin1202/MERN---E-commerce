@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/Main";
+import DashboardLayout from "../layouts/DashbordLayout"
+import Dashboard from "../Dashboard/index"
 import Home from "../pages/Home/Index";
 import Shop from "../pages/Shop/Index";
 import Cart from "../pages/Cart/Index";
@@ -8,6 +10,8 @@ import SignIn from "../components/SingIn";
 import UpdateProfile from "../components/UpdateProfile";
 import ProfileUser from "../components/ProfileUser";
 import ProtectPage from "../pages/ProtectPage/index";
+import AddProduct from "../pages/AddProduct/index";
+import ManageItems from "../pages/ManageItems/index";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,5 +59,23 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:"dashboard",
+    element:<DashboardLayout/>,
+    children:[
+      {
+        path:"",
+        element:<Dashboard/>
+      },
+      {
+        path:"addProduct",
+        element:<AddProduct/>
+      },
+      {
+        path:"manage-items",
+        element:<ManageItems/>
+      }
+    ]
+  }
 ]);
 export default router;

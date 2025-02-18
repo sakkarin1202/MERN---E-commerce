@@ -3,7 +3,7 @@ import CartService from "../services/cart.service";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import useCart from "../hooks/useCart";
-import swal from "SweetAlert2";
+import swal from "sweetalert2";
 
 const Card = ({ item }) => {
   const { _id, name, image, description, category, price } = item;
