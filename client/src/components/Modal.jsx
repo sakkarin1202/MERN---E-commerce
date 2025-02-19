@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { FaCookie, FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
@@ -24,6 +24,7 @@ const Modal = (name) => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+
         Swal.fire({
           icon: "success",
           title: "Login Successful",

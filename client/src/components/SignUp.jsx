@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../context/Authcontext";
 import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router";
+import UserService from "../services/user.service";
 
 const SignUp = () => {
   const { createUser, signUpWithGoogle, signUpWithGithub, signUpWithFacebook } =
@@ -20,9 +21,10 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     createUser(data.email, data.password)
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
         console.log("User signed up:", user);
+        await UserService.addUser(user.email);
         Swal.fire({
           icon: "success",
           title: "Signup Successful",
@@ -42,9 +44,10 @@ const SignUp = () => {
   };
   const googleSignUp = () => {
     signUpWithGoogle()
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
         console.log(user);
+        await UserService.addUser(user.email);
         Swal.fire({
           icon: "success",
           title: "Login Successful",
@@ -65,9 +68,10 @@ const SignUp = () => {
   };
   const githubSignUp = () => {
     signUpWithGithub()
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
         console.log(user);
+        await UserService.addUser(user.email);
         Swal.fire({
           icon: "success",
           title: "Github Login Successful",
@@ -89,9 +93,10 @@ const SignUp = () => {
 
   const facebookSignUp = () => {
     signUpWithFacebook()
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
         console.log(user);
+        await UserService.addUser(user.email);
         Swal.fire({
           icon: "success",
           title: "Facebook Login Successful",

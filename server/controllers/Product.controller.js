@@ -113,7 +113,7 @@ exports.updateProduct = async (req, res) => {
     const productDoc = await ProductModel.findById(id);
     if (!productDoc) {
       res.status(404).send({
-        message: "You Cannnot update this product",
+        message: "You Cannot update this product",
       });
       return;
     }
@@ -127,7 +127,7 @@ exports.updateProduct = async (req, res) => {
     productDoc.category = category;
     productDoc.price = price;
     if (req.file) {
-      productDoc.cover = req.file.firebaseUrl;
+      productDoc.image = req.file.firebaseUrl;
     }
     await productDoc.save();
     res.json(productDoc);

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/Main";
-import DashboardLayout from "../layouts/DashbordLayout"
-import Dashboard from "../Dashboard/index"
+import DashboardLayout from "../layouts/DashbordLayout";
+import Dashboard from "../Dashboard/index";
 import Home from "../pages/Home/Index";
 import Shop from "../pages/Shop/Index";
 import Cart from "../pages/Cart/Index";
@@ -12,6 +12,7 @@ import ProfileUser from "../components/ProfileUser";
 import ProtectPage from "../pages/ProtectPage/index";
 import AddProduct from "../pages/AddProduct/index";
 import ManageItems from "../pages/ManageItems/index";
+import AdminRoute from "../ProtectRoutes/AdminRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,22 +61,26 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path:"dashboard",
-    element:<DashboardLayout/>,
-    children:[
+    path: "dashboard",
+    element: (
+      <AdminRoute>
+        <DashboardLayout />
+      </AdminRoute>
+    ),
+    children: [
       {
-        path:"",
-        element:<Dashboard/>
+        path: "",
+        element: <Dashboard />,
       },
       {
-        path:"addProduct",
-        element:<AddProduct/>
+        path: "add-Product",
+        element: <AddProduct />,
       },
       {
-        path:"manage-items",
-        element:<ManageItems/>
-      }
-    ]
-  }
+        path: "manage-items",
+        element: <ManageItems />,
+      },
+    ],
+  },
 ]);
 export default router;

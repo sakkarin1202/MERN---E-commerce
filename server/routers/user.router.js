@@ -1,10 +1,8 @@
-const mongoose = require("mongoose");
-const { Schema, model } = mongoose;
+const express = require("express");
+const router = express.Router();
+const userController = require("../controllers/user.controller");
 
-const UserSchema = new Schema({
-  username: { type: String, require: true, unique: true, min: 4 },
-  password: { type: String, require: true },
-});
-
-const UserModel = model("User", UserSchema);
-module.exports = UserModel;
+//http://localhost:5000/api/v1/auth/sign
+router.post("/sign", userController.sign);
+router.post("/", userController.addUser);
+module.exports = router;
