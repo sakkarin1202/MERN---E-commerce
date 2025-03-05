@@ -21,12 +21,16 @@ try {
 }
 
 app.use(cors({ origin: BASE_URL, credentials: true }));
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+//stripe webhook
+app.use("/api/v1/stripe/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to E-commerce api</h1>");
 });
 app.use("/uploads", express.static(__dirname + "/uploads"));
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/cart", cartRouter);
