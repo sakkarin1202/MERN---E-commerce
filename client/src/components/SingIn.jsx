@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router";
 
-
 const SignIn = () => {
   const { login, signUpWithGoogle, signUpWithGithub, signUpWithFacebook } =
     useContext(AuthContext);
