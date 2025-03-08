@@ -3,8 +3,9 @@ import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router";
+import {AuthContext} from "../context/AuthContext"
 import UserService from "../services/user.service";
-import { AuthContext } from "../context/AuthContext";
+
 
 const SignUp = () => {
   const { createUser, signUpWithGoogle, signUpWithGithub, signUpWithFacebook } =
