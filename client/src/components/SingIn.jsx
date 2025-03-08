@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext"
 import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router";
 
@@ -122,7 +122,7 @@ const SignIn = () => {
             </label>
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="Enter your email "
               className="input input-bordered w-full"
               {...register("email", { required: "Email is required" })}
             />
