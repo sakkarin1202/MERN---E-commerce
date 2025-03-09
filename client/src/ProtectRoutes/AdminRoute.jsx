@@ -6,7 +6,7 @@ const AdminRoute = ({ children }) => {
   const { user, isLoading, getUser } = useContext(AuthContext);
   const location = useLocation();
   const userInfo = getUser();
-  if (isLoading) {
+  if (isLoading|| !userInfo) {
     return <div>loading.....</div>;
   }
   if (user && userInfo.role === "admin") {
