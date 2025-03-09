@@ -8,10 +8,15 @@ import { AiOutlineHome, AiOutlineMenu } from "react-icons/ai";
 import { FaBoxOpen } from "react-icons/fa6";
 import { MdOutlineLocalShipping } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
+import { FiLogOut } from "react-icons/fi";
+import { useNavigate } from "react-router";
 
 const Breadcrumbs = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
+  
+  
+  
 
   return (
     <nav className="text-gray-600 text-sm w-full p-4 overflow-x-auto">
@@ -42,6 +47,11 @@ const Breadcrumbs = () => {
 
 const DashBoardLayout = () => {
   const isAdmin = true;
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear(); 
+    navigate("/"); 
+  };
   return (
     <>
       {isAdmin ? (
@@ -78,7 +88,7 @@ const DashBoardLayout = () => {
                   <div className="badge badge-primary ml-3">Admin</div>
                 </a>
               </li>
-
+          
               <div>
                 <div className="relative flex py-5 items-center">
                   <div className="flex-grow border-t border-gray-400"></div>
@@ -153,6 +163,14 @@ const DashBoardLayout = () => {
                   <BiSupport className="w-5 h-5 mr-2" /> Customer Support
                 </Link>
               </li>
+              <li>
+            <button
+            onClick={handleLogout}
+              className="flex items-center text-red-500 hover:text-red-700"
+            >
+              <FiLogOut className="w-5 h-5 mr-2" /> Logout
+            </button>
+          </li>
             </ul>
           </div>
         </div>

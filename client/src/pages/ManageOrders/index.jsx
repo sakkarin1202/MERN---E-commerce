@@ -74,89 +74,81 @@ const Index = () => {
   };
 
   const handleViewDetails = (order) => {
+    
     const orderDetailsHtml = `
-    <div style="text-align: left;">
-      <h3 style="font-size: 20px; font-weight: bold;">Order Details</h3>
-
-      <h4 style="margin-top: 10px; font-weight: bold;">Products</h4>
-      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-        <thead>
-          <tr style="background-color: #f4f4f4;">
-            <th style="border: 1px solid #ddd; padding: 8px;">#</th>
-            <th style="border: 1px solid #ddd; padding: 8px;">Image</th>
-            <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
-            <th style="border: 1px solid #ddd; padding: 8px;">Unit Price</th>
-            <th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>
-            <th style="border: 1px solid #ddd; padding: 8px;">Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${
-            order.products && order.products.length > 0
-              ? order.products
-                  .map(
-                    (order, index) => `
-                   
-              <tr>
-                <td style="border: 1px solid #ddd; padding: 8px;">${
-                  index + 1
-                }</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">
-                  <img src="${order.productId.image || "/placeholder.png"}" 
-                       alt="Product Image" width="50" height="50" />
-                </td>
-                <td style="border: 1px solid #ddd; padding: 8px;">${
-                  order.productId.name || "No Name"
-                }</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">฿${
-                  order.productId?.price
-                    ? order.productId.price.toLocaleString()
-                    : "0.00"
-                }</td>
-
-                <td style="border: 1px solid #ddd; padding: 8px;">${
-                  order.quantity || "0"
-                }</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">฿${
-                  order.quantity * order.productId?.price
-                }</td>
-              </tr>
-            `
-                  )
-                  .join("")
-              : `<tr><td colspan="6" style="text-align: center; padding: 8px;">No Products Found</td></tr>`
-          }
-        </tbody>
-      </table>
-
-      <h4 style="font-weight: bold; margin-top: 10px;">Total: ฿${
-        order.total
-      }</h4>
-      
-      <h4 style="margin-top: 20px; font-weight: bold;">Shipping Details</h4>
-      <div style="display: flex; justify-content: space-between;">
-        <div>
-          <p><strong>Name:</strong> ${order.shipping.name || "N/A"}</p>
-          <p><strong>Phone:</strong> ${order.shipping.phone || "N/A"}</p>
-          <p><strong>Address:</strong> ${
-            order.shipping?.address?.line1 || "N/A"
-          }</p>
-        </div>
-        <div>
-          <p><strong>City:</strong> ${
-            order.shipping?.address?.city || "N/A"
-          }</p>
-          <p><strong>Country:</strong> ${
-            order.shipping?.address?.country || "N/A"
-          }</p>
-          <p><strong>Postal Code:</strong> ${
-            order.shipping.address.postal_code || "N/A"
-          }</p>
+      <div style="text-align: left;">
+        <h3 style="font-size: 20px; font-weight: bold;">Order Details</h3>
+  
+        <h4 style="margin-top: 10px; font-weight: bold;">Products</h4>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+          <thead>
+            <tr style="background-color: #f4f4f4;">
+              <th style="border: 1px solid #ddd; padding: 8px;">#</th>
+              <th style="border: 1px solid #ddd; padding: 8px;">Image</th>
+              <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
+              <th style="border: 1px solid #ddd; padding: 8px;">Unit Price</th>
+              <th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>
+              <th style="border: 1px solid #ddd; padding: 8px;">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${
+              order.products && order.products.length > 0
+                ? order.products
+                    .map((item, index) => {
+                      const product = item.productId;
+                      const productExists = product != null;
+                      console.log(item);
+                      
+                       
+                      return `
+                        <tr>
+                          <td style="border: 1px solid #ddd; padding: 8px;">
+                            ${index + 1}
+                          </td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">
+                            <img src="${productExists && product.image ? product.image : "/placeholder.png"}" 
+                              alt="Product Image" width="50" height="50" />
+                          </td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">
+                            ${productExists && product.name ? product.name : "No Name"}
+                          </td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">
+                            ฿${productExists && product.price ? product.price.toLocaleString() : "0.00"}
+                          </td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">
+                            ${item.quantity || "0"}
+                          </td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">
+                            ฿${productExists && product.price ? (item.quantity * product.price).toLocaleString() : "0.00"}
+                          </td>
+                        </tr>
+                      `;
+                    })
+                    .join("")
+                : `<tr><td colspan="6" style="text-align: center; padding: 8px;">No Products Found</td></tr>`
+            }
+          </tbody>
+        </table>
+  
+        <h4 style="font-weight: bold; margin-top: 10px;">Total: ฿${order.total.toLocaleString()}</h4>
+        
+        <h4 style="margin-top: 20px; font-weight: bold;">Shipping Details</h4>
+        <div style="display: flex; justify-content: space-between;">
+          <div>
+            <p><strong>Name:</strong> ${order.shipping.name || "N/A"}</p>
+            <p><strong>Phone:</strong> ${order.shipping.phone || "N/A"}</p>
+            <p><strong>Address:</strong> ${order.shipping?.address?.line1 || "N/A"}</p>
+          </div>
+          <div>
+            <p><strong>City:</strong> ${order.shipping?.address?.city || "N/A"}</p>
+            <p><strong>Country:</strong> ${order.shipping?.address?.country || "N/A"}</p>
+            <p><strong>Postal Code:</strong> ${order.shipping?.address?.postal_code || "N/A"}</p>
+          </div>
         </div>
       </div>
-    </div>
-  `;
-
+    `;
+    
     Swal.fire({
       title: "Order Details",
       html: orderDetailsHtml,
@@ -164,6 +156,10 @@ const Index = () => {
       width: "700px",
     });
   };
+  
+  
+  
+  
 
   return (
     <div className="container mx-auto p-6">
