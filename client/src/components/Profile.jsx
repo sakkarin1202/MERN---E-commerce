@@ -1,18 +1,47 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext"
 import useCart from "../hooks/useCart";
 
 const Profile = () => {
-  const { logout, user } = useContext(AuthContext);
-  const [cart, refetch] = useCart();
+  const { user, isLoading, getUser,logout } = useContext(AuthContext);
+  const [cart] = useCart();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const userInfo = getUser();
+
+  useEffect(() => {
+    if (user) {
+      console.log("User Data:", userInfo);
+      setIsAdmin(userInfo?.role === "admin"); 
+    }
+  }, [user]);
+
   return (
-    <div>
+    <div className="flex items-center space-x-4">
+      {/* ปุ่มค้นหา */}
+      <button className="btn btn-ghost btn-circle">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </button>
+
+      {/* ตะกร้าสินค้า */}
       <div className="dropdown dropdown-end">
         <a href="/cart" role="button" className="btn btn-ghost btn-circle">
           <div className="indicator">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-6 w-6 text-gray-700"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -24,43 +53,53 @@ const Profile = () => {
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
               />
             </svg>
-            <span className="badge badge-sm indicator-item">
+            <span
+              className={`badge badge-sm indicator-item ${
+                cart?.length > 0 ? "bg-red text-white" : "bg-white text-black border border-gray-400"
+              }`}
+            >
               {(cart && cart.length) || 0}
             </span>
           </div>
         </a>
       </div>
+
+      {/* เมนูโปรไฟล์ */}
       <div className="dropdown dropdown-end">
         <div
           tabIndex={0}
           role="button"
           className="btn btn-ghost btn-circle avatar"
         >
-          <div className="w-10 rounded-full">
-            {user?.photoURL ? (
-              <div className="w-10 rounded-full">
-                <img src={user.photoURL} alt="User Photo Profile" />
-              </div>
-            ) : (
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            )}
-          </div>
+          <img
+            src={
+              user?.photoURL ||
+              "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            }
+            alt="User Avatar"
+            className="w-10 h-10 rounded-full"
+          />
         </div>
         <ul
           tabIndex={0}
           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
         >
+   
+          {isAdmin && (
+            <li>
+              <a href="/dashboard" className="justify-between">
+                Dashboard
+              </a>
+            </li>
+          )}
+
           <li>
-            <a className="justify-between" href="/profileUser">
+            <a href="/profile" className="justify-between">
               Profile
-              <span className="badge">New</span>
             </a>
           </li>
           <li>
-            <a href="/UpdateProfile">Settings</a>
+            <a href="/updateprofile">Settings</a>
           </li>
           <li>
             <a onClick={() => logout()}>Logout</a>
